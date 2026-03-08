@@ -1,0 +1,425 @@
+:root {
+  /* Colors */
+  --color-primary: #6c63ff;
+  --color-primary-hover: #574fd6;
+  --color-primary-shadow: rgba(108, 99, 255, 0.15);
+
+  --color-success: #38a169;
+
+  --color-danger: #e53e3e;
+  --color-danger-bg: #fff5f5;
+  --color-danger-border: #fed7d7;
+
+  --color-text: #1a1a2e;
+  --color-text-strong: #333;
+  --color-text-label: #444;
+  --color-text-secondary: #555;
+  --color-text-muted: #666;
+  --color-text-desc: #777;
+  --color-text-subtle: #888;
+  --color-text-empty: #999;
+  --color-text-disabled: #ccc;
+
+  --color-surface: #fff;
+  --color-surface-alt: #f9f9fc;
+  --color-bg: #f0f2f5;
+  --color-bg-root: #f5f5f5;
+
+  --color-border: #e0e0e0;
+  --color-border-subtle: #e8e8f0;
+  --color-border-light: #ddd;
+  --color-border-hover: #aaa;
+
+  --shadow-card: rgba(0, 0, 0, 0.08);
+  --shadow-gifts: rgba(0, 0, 0, 0.07);
+
+  /* Typography */
+  font-family: system-ui, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--color-text);
+  background-color: var(--color-bg-root);
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+}
+
+/* ── Home Page ─────────────────────────────── */
+
+.home-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.home-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.home-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.home-header p {
+  margin-top: 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+}
+
+.home-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.card-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.5rem 1rem;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  text-align: center;
+}
+
+.card-btn:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 16px var(--color-primary-shadow);
+}
+
+.card-btn-icon {
+  font-size: 2rem;
+}
+
+.card-btn-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.card-btn-desc {
+  font-size: 0.82rem;
+  color: var(--color-text-subtle);
+}
+
+/* ── Form Panel ─────────────────────────────── */
+
+.form-panel {
+  background: var(--color-surface);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px var(--shadow-card);
+}
+
+.form-panel h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+}
+
+.form-panel form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-label);
+}
+
+input {
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid var(--color-border-light);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+input:focus {
+  border-color: var(--color-primary);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* ── Buttons ─────────────────────────────── */
+
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 8px;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: inherit;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1.5px solid var(--color-border-light);
+  border-radius: 8px;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-border-hover);
+}
+
+.error-msg {
+  color: var(--color-danger);
+  font-size: 0.88rem;
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+}
+
+/* ── Event Page ─────────────────────────────── */
+
+.event-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.event-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.event-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.event-date {
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.btn-back {
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.btn-back:hover {
+  text-decoration: underline;
+}
+
+.event-id-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 2rem;
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+}
+
+.event-id-box code {
+  flex: 1;
+  font-family: monospace;
+  font-size: 0.82rem;
+  color: var(--color-text-strong);
+  word-break: break-all;
+}
+
+.btn-copy {
+  background: transparent;
+  border: 1.5px solid var(--color-border-light);
+  border-radius: 6px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.btn-copy:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ── Gifts Section ─────────────────────────── */
+
+.gifts-section {
+  background: var(--color-surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px var(--shadow-gifts);
+}
+
+.gifts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.gifts-header h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.add-gift-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: var(--color-surface-alt);
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--color-text-empty);
+  padding: 2rem 0;
+  font-size: 0.95rem;
+}
+
+.gift-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gift-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--color-border-subtle);
+  transition: opacity 0.2s;
+}
+
+.gift-item.purchased {
+  opacity: 0.55;
+}
+
+.gift-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.gift-name {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+.gift-desc {
+  font-size: 0.82rem;
+  color: var(--color-text-desc);
+}
+
+.gift-price {
+  font-size: 0.82rem;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.gift-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-status {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  border: 1.5px solid var(--color-border-light);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--color-text-secondary);
+  transition: all 0.2s;
+}
+
+.btn-status.suggested:hover {
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.btn-status.purchased {
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.btn-remove {
+  background: transparent;
+  border: none;
+  color: var(--color-text-disabled);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: inherit;
+  transition: color 0.2s;
+}
+
+.btn-remove:hover {
+  color: var(--color-danger);
+}

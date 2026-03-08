@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npm --version)",
+      "Bash(npm install --save-dev cypress)",
+      "Bash(npm run cypress:open)",
+      "Bash(npm run cypress:run)"
+    ]
+  }
+}
