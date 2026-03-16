@@ -1,7 +1,7 @@
 export type Gift = {
   id: string;
   name: string;
-  description?: string;
+  link?: string;
   price?: number;
   status: 'suggested' | 'purchased';
 }

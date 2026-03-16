@@ -10,13 +10,13 @@ import {
   EVENT_ADD_GIFT_BTN,
   EVENT_ADD_GIFT_FORM,
   EVENT_GIFT_NAME_INPUT,
-  EVENT_GIFT_DESC_INPUT,
+  EVENT_GIFT_LINK_INPUT,
   EVENT_GIFT_PRICE_INPUT,
   EVENT_GIFT_SUBMIT,
   EVENT_EMPTY_STATE,
   EVENT_GIFT_ITEM,
   EVENT_GIFT_NAME,
-  EVENT_GIFT_DESC,
+  EVENT_GIFT_LINK,
   EVENT_GIFT_PRICE,
   EVENT_GIFT_STATUS_BTN,
   EVENT_GIFT_REMOVE_BTN,
@@ -29,7 +29,7 @@ export const EventPage = () => {
 
   // Add gift form state
   const [giftName, setGiftName] = useState('');
-  const [giftDescription, setGiftDescription] = useState('');
+  const [giftLink, setGiftLink] = useState('');
   const [giftPrice, setGiftPrice] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
 
@@ -58,13 +58,13 @@ export const EventPage = () => {
     const gift: Gift = {
       id: crypto.randomUUID(),
       name: giftName,
-      description: giftDescription || undefined,
+      link: giftLink || undefined,
       price: giftPrice ? parseFloat(giftPrice) : undefined,
       status: 'suggested',
     };
     persist({ ...event, gifts: [...event.gifts, gift] });
     setGiftName('');
-    setGiftDescription('');
+    setGiftLink('');
     setGiftPrice('');
     setShowAddForm(false);
   };
@@ -130,13 +130,13 @@ export const EventPage = () => {
               />
             </label>
             <label>
-              Description
+              Link (optional)
               <input
-                type="text"
-                data-testid={EVENT_GIFT_DESC_INPUT}
-                value={giftDescription}
-                onChange={e => setGiftDescription(e.target.value)}
-                placeholder="Optional details"
+                type="url"
+                data-testid={EVENT_GIFT_LINK_INPUT}
+                value={giftLink}
+                onChange={e => setGiftLink(e.target.value)}
+                placeholder="e.g. https://www.amazon.com/..."
               />
             </label>
             <label>
@@ -163,7 +163,17 @@ export const EventPage = () => {
               <li key={gift.id} data-testid={EVENT_GIFT_ITEM} className={`gift-item ${gift.status}`}>
                 <div className="gift-info">
                   <span className="gift-name" data-testid={EVENT_GIFT_NAME}>{gift.name}</span>
-                  {gift.description && <span className="gift-desc" data-testid={EVENT_GIFT_DESC}>{gift.description}</span>}
+                  {gift.link && (
+                    <a
+                      className="gift-link"
+                      data-testid={EVENT_GIFT_LINK}
+                      href={gift.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View listing ↗
+                    </a>
+                  )}
                   {gift.price !== undefined && (
                     <span className="gift-price" data-testid={EVENT_GIFT_PRICE}>€{gift.price.toFixed(2)}</span>
                   )}

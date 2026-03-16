@@ -5,13 +5,13 @@ import {
   EVENT_ADD_GIFT_BTN,
   EVENT_ADD_GIFT_FORM,
   EVENT_GIFT_NAME_INPUT,
-  EVENT_GIFT_DESC_INPUT,
+  EVENT_GIFT_LINK_INPUT,
   EVENT_GIFT_PRICE_INPUT,
   EVENT_GIFT_SUBMIT,
   EVENT_EMPTY_STATE,
   EVENT_GIFT_ITEM,
   EVENT_GIFT_NAME,
-  EVENT_GIFT_DESC,
+  EVENT_GIFT_LINK,
   EVENT_GIFT_PRICE,
   EVENT_GIFT_STATUS_BTN,
   EVENT_GIFT_REMOVE_BTN,
@@ -97,15 +97,25 @@ describe('Event Page — gift list', () => {
     cy.getByTestId(EVENT_GIFT_NAME).contains('Book');
   });
 
-  it('adds a gift with description and price and shows all details', () => {
+  it('adds a gift with a link and price and shows all details', () => {
     cy.getByTestId(EVENT_ADD_GIFT_BTN).click();
     cy.getByTestId(EVENT_GIFT_NAME_INPUT).type('Headphones');
-    cy.getByTestId(EVENT_GIFT_DESC_INPUT).type('Sony WH-1000XM5');
+    cy.getByTestId(EVENT_GIFT_LINK_INPUT).type('https://www.amazon.com/dp/example');
     cy.getByTestId(EVENT_GIFT_PRICE_INPUT).type('299.99');
     cy.getByTestId(EVENT_GIFT_SUBMIT).click();
     cy.getByTestId(EVENT_GIFT_NAME).contains('Headphones');
-    cy.getByTestId(EVENT_GIFT_DESC).contains('Sony WH-1000XM5');
+    cy.getByTestId(EVENT_GIFT_LINK)
+      .should('have.attr', 'href', 'https://www.amazon.com/dp/example')
+      .and('have.attr', 'target', '_blank')
+      .and('contain', 'View listing');
     cy.getByTestId(EVENT_GIFT_PRICE).contains('€299.99');
+  });
+
+  it('does not show a link when none is provided', () => {
+    cy.getByTestId(EVENT_ADD_GIFT_BTN).click();
+    cy.getByTestId(EVENT_GIFT_NAME_INPUT).type('Book');
+    cy.getByTestId(EVENT_GIFT_SUBMIT).click();
+    cy.getByTestId(EVENT_GIFT_LINK).should('not.exist');
   });
 
   it('clears the form and hides it after adding a gift', () => {

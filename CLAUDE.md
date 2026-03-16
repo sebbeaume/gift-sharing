@@ -30,7 +30,7 @@ src/
 ## Data model
 ```ts
 type Gift = {
-  id: string; name: string; description?: string;
+  id: string; name: string; link?: string;
   price?: number; status: 'suggested' | 'purchased';
 }
 type GiftEvent = {
@@ -60,4 +60,5 @@ Custom slash commands live in `.claude/commands/`:
 - [x] HomePage with Create / Join forms and error handling
 - [x] EventPage with gift list (add, toggle purchased, remove)
 - [x] Event ID copy-to-clipboard button
+- [x] Add-gift form with name, link (URL, optional), and price fields; gifts display a "View listing ↗" anchor when a link is provided
 - [ ] Nothing else yet — this is the starting point for the next session
