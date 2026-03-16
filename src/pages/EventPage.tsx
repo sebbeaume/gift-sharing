@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import type { GiftEvent, Gift } from '../types';
 import { getEvent, updateEvent } from '../utils/storage';
 import { isAuthenticated } from '../utils/auth';
+import { GiftItem } from '../components/GiftItem';
 import {
   EVENT_BACK_BTN,
   EVENT_ID_CODE,
@@ -14,12 +15,6 @@ import {
   EVENT_GIFT_PRICE_INPUT,
   EVENT_GIFT_SUBMIT,
   EVENT_EMPTY_STATE,
-  EVENT_GIFT_ITEM,
-  EVENT_GIFT_NAME,
-  EVENT_GIFT_LINK,
-  EVENT_GIFT_PRICE,
-  EVENT_GIFT_STATUS_BTN,
-  EVENT_GIFT_REMOVE_BTN,
 } from './EventPageTestIds';
 
 export const EventPage = () => {
@@ -160,35 +155,12 @@ export const EventPage = () => {
         ) : (
           <ul className="gift-list">
             {event.gifts.map(gift => (
-              <li key={gift.id} data-testid={EVENT_GIFT_ITEM} className={`gift-item ${gift.status}`}>
-                <div className="gift-info">
-                  <span className="gift-name" data-testid={EVENT_GIFT_NAME}>{gift.name}</span>
-                  {gift.link && (
-                    <a
-                      className="gift-link"
-                      data-testid={EVENT_GIFT_LINK}
-                      href={gift.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      View listing ↗
-                    </a>
-                  )}
-                  {gift.price !== undefined && (
-                    <span className="gift-price" data-testid={EVENT_GIFT_PRICE}>€{gift.price.toFixed(2)}</span>
-                  )}
-                </div>
-                <div className="gift-actions">
-                  <button
-                    className={`btn-status ${gift.status}`}
-                    data-testid={EVENT_GIFT_STATUS_BTN}
-                    onClick={() => toggleStatus(gift.id)}
-                  >
-                    {gift.status === 'suggested' ? 'Mark purchased' : '✓ Purchased'}
-                  </button>
-                  <button className="btn-remove" data-testid={EVENT_GIFT_REMOVE_BTN} onClick={() => removeGift(gift.id)}>✕</button>
-                </div>
-              </li>
+              <GiftItem
+                key={gift.id}
+                gift={gift}
+                onToggleStatus={toggleStatus}
+                onRemove={removeGift}
+              />
             ))}
           </ul>
         )}
