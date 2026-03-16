@@ -87,9 +87,9 @@ cy.getByTestId(HOME_CREATE_SUBMIT).click();
 **EventPageTestIds.ts**
 - `EVENT_BACK_BTN`, `EVENT_ID_CODE`, `EVENT_COPY_BTN` — header / ID box
 - `EVENT_ADD_GIFT_BTN`, `EVENT_ADD_GIFT_FORM` — gift form toggle and container
-- `EVENT_GIFT_NAME_INPUT`, `EVENT_GIFT_DESC_INPUT`, `EVENT_GIFT_PRICE_INPUT`, `EVENT_GIFT_SUBMIT` — add gift form fields
+- `EVENT_GIFT_NAME_INPUT`, `EVENT_GIFT_LINK_INPUT`, `EVENT_GIFT_PRICE_INPUT`, `EVENT_GIFT_SUBMIT` — add gift form fields
 - `EVENT_EMPTY_STATE` — empty list message
-- `EVENT_GIFT_ITEM`, `EVENT_GIFT_NAME`, `EVENT_GIFT_DESC`, `EVENT_GIFT_PRICE` — gift list item and its parts
+- `EVENT_GIFT_ITEM`, `EVENT_GIFT_NAME`, `EVENT_GIFT_LINK`, `EVENT_GIFT_PRICE` — gift list item and its parts
 - `EVENT_GIFT_STATUS_BTN`, `EVENT_GIFT_REMOVE_BTN` — gift item actions
 
 ## Known pitfalls
@@ -130,3 +130,7 @@ cy.getByTestId(HOME_CREATE_DATE_INPUT).then($el => {
 2. Read the failing spec and the source component together
 3. Check for: renamed TestId constants, removed elements, updated text content, or timing issues
 4. Fix the test to match the current implementation — never change the implementation to match the test unless the implementation itself is wrong
+
+## After any modification
+
+**Always run the full test suite before finishing.** After writing or updating any tests, run `npm run cypress:run` and verify all tests pass. If any test fails, fix it before considering the task done.

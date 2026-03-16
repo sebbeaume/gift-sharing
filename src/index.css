@@ -369,9 +369,14 @@ input:focus {
   font-size: 0.95rem;
 }
 
-.gift-desc {
+.gift-link {
   font-size: 0.82rem;
-  color: var(--color-text-desc);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.gift-link:hover {
+  text-decoration: underline;
 }
 
 .gift-price {
