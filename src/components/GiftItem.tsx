@@ -6,7 +6,7 @@ import {
   EVENT_GIFT_PRICE,
   EVENT_GIFT_STATUS_BTN,
   EVENT_GIFT_REMOVE_BTN,
-} from './EventPageTestIds';
+} from '../pages/EventPageTestIds';
 
 type Props = {
   gift: Gift;
