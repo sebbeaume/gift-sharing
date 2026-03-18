@@ -1,4 +1,5 @@
 import type { Contribution } from '../types';
+import { formatContributionDate } from '../utils/date';
 import {
   EVENT_CONTRIBUTE_BTN,
   EVENT_CONTRIBUTE_FORM,
@@ -73,7 +74,7 @@ export const ContributionsSection = ({
             <li key={c.id} className="contribution-item" data-testid={EVENT_CONTRIBUTION_ITEM}>
               <span className="contribution-amount">€{c.amount.toFixed(2)}</span>
               <span className="contribution-date">
-                {new Date(c.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                {formatContributionDate(c.createdAt)}
               </span>
             </li>
           ))}

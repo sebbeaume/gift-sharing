@@ -4,6 +4,7 @@ export type Gift = {
   link?: string;
   price?: number;
   status: 'suggested' | 'purchased';
+  contributions: Contribution[];
 }
 
 export type Contribution = {
