@@ -1,4 +1,4 @@
-import type { GiftEvent } from '../types';
+import type { GiftEvent, Gift } from '../types';
 
 const STORAGE_KEY = 'gift-sharing-events';
 
@@ -6,7 +6,11 @@ export const getEvents = (): GiftEvent[] => {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) return [];
   const events: GiftEvent[] = JSON.parse(raw);
-  return events.map(e => ({ contributions: [], ...e }));
+  return events.map(e => ({
+    contributions: [],
+    ...e,
+    gifts: (e.gifts ?? []).map((g: Gift) => ({ contributions: [], ...g })),
+  }));
 };
 
 export const getEvent = (id: string): GiftEvent | null => {

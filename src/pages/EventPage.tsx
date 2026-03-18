@@ -61,6 +61,7 @@ export const EventPage = () => {
       link: giftLink || undefined,
       price: giftPrice ? parseFloat(giftPrice) : undefined,
       status: 'suggested',
+      contributions: [],
     };
     persist({ ...event, gifts: [...event.gifts, gift] });
     setGiftName('');
@@ -92,6 +93,23 @@ export const EventPage = () => {
     persist({ ...event, contributions: [...event.contributions, contribution] });
     setContributeAmount('');
     setShowContributeForm(false);
+  };
+
+  const handleGiftContribute = (giftId: string, amount: number) => {
+    const contribution: Contribution = {
+      id: crypto.randomUUID(),
+      amount,
+      createdAt: new Date().toISOString(),
+    };
+    const gifts = event.gifts.map(g => {
+      if (g.id !== giftId) return g;
+      const updatedContributions = [...g.contributions, contribution];
+      const totalContributed = updatedContributions.reduce((sum, c) => sum + c.amount, 0);
+      const newStatus: Gift['status'] =
+        g.price !== undefined && totalContributed >= g.price ? 'purchased' : g.status;
+      return { ...g, contributions: updatedContributions, status: newStatus };
+    });
+    persist({ ...event, gifts });
   };
 
   const formattedDate = new Date(event.date).toLocaleDateString('en-US', {
@@ -177,6 +195,7 @@ export const EventPage = () => {
                 gift={gift}
                 onToggleStatus={toggleStatus}
                 onRemove={removeGift}
+                onContribute={handleGiftContribute}
               />
             ))}
           </ul>

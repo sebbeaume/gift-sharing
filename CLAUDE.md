@@ -32,6 +32,7 @@ src/
 type Gift = {
   id: string; name: string; link?: string;
   price?: number; status: 'suggested' | 'purchased';
+  contributions: Contribution[];
 }
 type Contribution = {
   id: string; amount: number; createdAt: string;
@@ -42,7 +43,7 @@ type GiftEvent = {
 }
 ```
 
-> **Backwards compat:** `getEvents()` in `storage.ts` defaults `contributions` to `[]` for events stored before the field existed.
+> **Backwards compat:** `getEvents()` in `storage.ts` defaults `contributions` to `[]` for both event-level and gift-level contributions for data stored before these fields existed.
 
 ## Auth flow
 1. Create event → saved to localStorage → event ID stored in sessionStorage → redirect to `/event/:id`
@@ -67,3 +68,4 @@ Custom slash commands live in `.claude/commands/`:
 - [x] Event ID copy-to-clipboard button
 - [x] Add-gift form with name, link (URL, optional), and price fields; gifts display a "View listing ↗" anchor when a link is provided
 - [x] Contributions section on EventPage: users can contribute a money amount; running total is displayed; each contribution is listed with its date
+- [x] Per-gift contributions: "Contribute" button on each suggested gift with a price; inline amount form with max capped at remaining balance; progress bar showing funded %; tooltip on hover with per-contribution breakdown; gift auto-marks as purchased when fully funded

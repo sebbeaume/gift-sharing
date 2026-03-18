@@ -21,6 +21,12 @@ import {
   EVENT_CONTRIBUTE_SUBMIT,
   EVENT_CONTRIBUTIONS_TOTAL,
   EVENT_CONTRIBUTION_ITEM,
+  EVENT_GIFT_CONTRIBUTE_BTN,
+  EVENT_GIFT_CONTRIBUTE_FORM,
+  EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT,
+  EVENT_GIFT_CONTRIBUTE_SUBMIT,
+  EVENT_GIFT_PROGRESS_BAR,
+  EVENT_GIFT_PROGRESS_TOOLTIP,
 } from '../../src/pages/EventPageTestIds';
 
 const EVENT = {
@@ -213,5 +219,121 @@ describe('Event Page — contributions', () => {
     cy.getByTestId(EVENT_CONTRIBUTE_SUBMIT).click();
     cy.getByTestId(EVENT_CONTRIBUTE_FORM).should('not.exist');
     cy.getByTestId(EVENT_CONTRIBUTE_BTN).should('contain', '+ Contribute');
+  });
+});
+
+// ── Helper to add a gift with a price ──────────────────────────────────────
+const addGiftWithPrice = (name: string, price: string) => {
+  cy.getByTestId(EVENT_ADD_GIFT_BTN).click();
+  cy.getByTestId(EVENT_GIFT_NAME_INPUT).type(name);
+  cy.getByTestId(EVENT_GIFT_PRICE_INPUT).type(price);
+  cy.getByTestId(EVENT_GIFT_SUBMIT).click();
+};
+
+describe('Event Page — per-gift contributions', () => {
+  beforeEach(visitEvent);
+
+  it('shows the Contribute button on a suggested gift with a price', () => {
+    addGiftWithPrice('Headphones', '100');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).should('exist').and('contain', 'Contribute');
+  });
+
+  it('does not show the Contribute button on a gift without a price', () => {
+    cy.getByTestId(EVENT_ADD_GIFT_BTN).click();
+    cy.getByTestId(EVENT_GIFT_NAME_INPUT).type('Mystery book');
+    cy.getByTestId(EVENT_GIFT_SUBMIT).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).should('not.exist');
+  });
+
+  it('opens the inline contribute form when clicking Contribute', () => {
+    addGiftWithPrice('Camera', '200');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_FORM).should('be.visible');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT).should('exist');
+  });
+
+  it('toggles the button label to Cancel when the form is open', () => {
+    addGiftWithPrice('Camera', '200');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).should('contain', 'Cancel');
+  });
+
+  it('hides the form when clicking Cancel', () => {
+    addGiftWithPrice('Camera', '200');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_FORM).should('not.exist');
+  });
+
+  it('shows the progress bar after a partial contribution', () => {
+    addGiftWithPrice('Headphones', '100');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT).type('40');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_SUBMIT).click();
+    cy.getByTestId(EVENT_GIFT_PROGRESS_BAR).should('exist');
+  });
+
+  it('enforces a max contribution equal to the remaining balance', () => {
+    addGiftWithPrice('Jacket', '80');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT)
+      .should('have.attr', 'max', '80.00');
+  });
+
+  it('updates the max after a prior contribution is made', () => {
+    addGiftWithPrice('Jacket', '80');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT).type('30');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_SUBMIT).click();
+
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT)
+      .should('have.attr', 'max', '50.00');
+  });
+
+  it('shows contribution breakdown in the tooltip on hover', () => {
+    addGiftWithPrice('Headphones', '100');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT).type('35');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_SUBMIT).click();
+
+    cy.getByTestId(EVENT_GIFT_PROGRESS_BAR).trigger('mouseenter');
+    cy.getByTestId(EVENT_GIFT_PROGRESS_TOOLTIP)
+      .should('be.visible')
+      .and('contain', '€35.00');
+  });
+
+  it('auto-marks gift as purchased when fully funded', () => {
+    addGiftWithPrice('Book', '50');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT).type('50');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_SUBMIT).click();
+
+    cy.getByTestId(EVENT_GIFT_ITEM).should('have.class', 'purchased');
+    cy.getByTestId(EVENT_GIFT_STATUS_BTN).should('contain', '✓ Purchased');
+  });
+
+  it('hides the Contribute button once the gift is fully funded', () => {
+    addGiftWithPrice('Book', '50');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT).type('50');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_SUBMIT).click();
+
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).should('not.exist');
+  });
+
+  it('does not show the Contribute button on a manually-purchased gift', () => {
+    addGiftWithPrice('Scarf', '30');
+    cy.getByTestId(EVENT_GIFT_STATUS_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).should('not.exist');
+  });
+
+  it('clears the form and hides it after submitting a gift contribution', () => {
+    addGiftWithPrice('Watch', '150');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT).type('60');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_SUBMIT).click();
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_FORM).should('not.exist');
+    cy.getByTestId(EVENT_GIFT_CONTRIBUTE_BTN).should('contain', 'Contribute');
   });
 });
