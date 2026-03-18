@@ -298,7 +298,7 @@ describe('Event Page — per-gift contributions', () => {
     cy.getByTestId(EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT).type('35');
     cy.getByTestId(EVENT_GIFT_CONTRIBUTE_SUBMIT).click();
 
-    cy.getByTestId(EVENT_GIFT_PROGRESS_WRAPPER).trigger('mouseenter');
+    cy.getByTestId(EVENT_GIFT_PROGRESS_WRAPPER).trigger('mouseover');
     cy.getByTestId(EVENT_GIFT_PROGRESS_TOOLTIP)
       .should('be.visible')
       .and('contain', '€35.00');
