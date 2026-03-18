@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import type { GiftEvent, Gift } from '../types';
+import type { GiftEvent, Gift, Contribution } from '../types';
 import { getEvent, updateEvent } from '../utils/storage';
 import { isAuthenticated } from '../utils/auth';
 import { GiftItem } from '../components/GiftItem';
+import { ContributionsSection } from '../components/ContributionsSection';
 import {
   EVENT_BACK_BTN,
   EVENT_ID_CODE,
@@ -27,6 +28,10 @@ export const EventPage = () => {
   const [giftLink, setGiftLink] = useState('');
   const [giftPrice, setGiftPrice] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
+
+  // Contribution form state
+  const [contributeAmount, setContributeAmount] = useState('');
+  const [showContributeForm, setShowContributeForm] = useState(false);
 
   useEffect(() => {
     if (!id || !isAuthenticated(id)) {
@@ -75,6 +80,18 @@ export const EventPage = () => {
 
   const removeGift = (giftId: string) => {
     persist({ ...event, gifts: event.gifts.filter(g => g.id !== giftId) });
+  };
+
+  const handleContribute = (e: React.FormEvent) => {
+    e.preventDefault();
+    const contribution: Contribution = {
+      id: crypto.randomUUID(),
+      amount: parseFloat(contributeAmount),
+      createdAt: new Date().toISOString(),
+    };
+    persist({ ...event, contributions: [...event.contributions, contribution] });
+    setContributeAmount('');
+    setShowContributeForm(false);
   };
 
   const formattedDate = new Date(event.date).toLocaleDateString('en-US', {
@@ -165,6 +182,15 @@ export const EventPage = () => {
           </ul>
         )}
       </section>
+
+      <ContributionsSection
+        contributions={event.contributions}
+        showContributeForm={showContributeForm}
+        contributeAmount={contributeAmount}
+        onToggleForm={() => setShowContributeForm(v => !v)}
+        onAmountChange={setContributeAmount}
+        onSubmit={handleContribute}
+      />
     </div>
   );
 };

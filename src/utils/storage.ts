@@ -4,7 +4,9 @@ const STORAGE_KEY = 'gift-sharing-events';
 
 export const getEvents = (): GiftEvent[] => {
   const raw = localStorage.getItem(STORAGE_KEY);
-  return raw ? JSON.parse(raw) : [];
+  if (!raw) return [];
+  const events: GiftEvent[] = JSON.parse(raw);
+  return events.map(e => ({ contributions: [], ...e }));
 };
 
 export const getEvent = (id: string): GiftEvent | null => {

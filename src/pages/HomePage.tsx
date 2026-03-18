@@ -43,6 +43,7 @@ export const HomePage = () => {
       date: createDate,
       password: createPassword,
       gifts: [],
+      contributions: [],
       createdAt: new Date().toISOString(),
     };
     saveEvent(event);

@@ -33,11 +33,16 @@ type Gift = {
   id: string; name: string; link?: string;
   price?: number; status: 'suggested' | 'purchased';
 }
+type Contribution = {
+  id: string; amount: number; createdAt: string;
+}
 type GiftEvent = {
   id: string; name: string; date: string;
-  password: string; gifts: Gift[]; createdAt: string;
+  password: string; gifts: Gift[]; contributions: Contribution[]; createdAt: string;
 }
 ```
+
+> **Backwards compat:** `getEvents()` in `storage.ts` defaults `contributions` to `[]` for events stored before the field existed.
 
 ## Auth flow
 1. Create event → saved to localStorage → event ID stored in sessionStorage → redirect to `/event/:id`
@@ -61,4 +66,4 @@ Custom slash commands live in `.claude/commands/`:
 - [x] EventPage with gift list (add, toggle purchased, remove)
 - [x] Event ID copy-to-clipboard button
 - [x] Add-gift form with name, link (URL, optional), and price fields; gifts display a "View listing ↗" anchor when a link is provided
-- [ ] Nothing else yet — this is the starting point for the next session
+- [x] Contributions section on EventPage: users can contribute a money amount; running total is displayed; each contribution is listed with its date

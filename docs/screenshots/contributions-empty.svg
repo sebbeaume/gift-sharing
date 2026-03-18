@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="480" viewBox="0 0 760 480" font-family="system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <!-- Background -->
+  <rect width="760" height="480" fill="#f0f2f5"/>
+
+  <!-- ── Header ── -->
+  <text x="20" y="38" font-size="14" fill="#6c63ff" font-weight="600">← Back</text>
+  <text x="90" y="35" font-size="26" fill="#1a1a2e" font-weight="700">Sarah's Birthday 🎂</text>
+  <text x="90" y="56" font-size="14" fill="#666">📅 Friday, April 18, 2026</text>
+
+  <!-- ── Event ID Box ── -->
+  <rect x="20" y="72" width="720" height="42" rx="8" fill="white" stroke="#e0e0e0" stroke-width="1.5"/>
+  <text x="32" y="97" font-size="13" fill="#555">Event ID:</text>
+  <text x="102" y="97" font-size="12" fill="#333" font-family="monospace">a3f9d2c1-7b4e-4f8a-9c2d-1e5f6a7b8c9d</text>
+  <rect x="638" y="82" width="92" height="24" rx="6" fill="white" stroke="#ddd" stroke-width="1.5"/>
+  <text x="684" y="98" font-size="12" fill="#555" text-anchor="middle">Copy</text>
+
+  <!-- ── Contributions Section (empty state) ── -->
+  <rect x="20" y="128" width="720" height="160" rx="12" fill="white" stroke="#e8e8f0" stroke-width="1"/>
+
+  <!-- Contributions header -->
+  <text x="32" y="156" font-size="17" fill="#1a1a2e" font-weight="600">Contributions</text>
+  <text x="32" y="175" font-size="13" fill="#555">Total: <tspan fill="#38a169" font-weight="700">€0.00</tspan></text>
+  <rect x="598" y="138" width="130" height="32" rx="8" fill="#6c63ff"/>
+  <text x="663" y="158" font-size="14" fill="white" text-anchor="middle" font-weight="600">+ Contribute</text>
+
+  <!-- Empty state note (subtle) -->
+  <text x="380" y="240" font-size="14" fill="#999" text-anchor="middle">No contributions yet.</text>
+</svg>
