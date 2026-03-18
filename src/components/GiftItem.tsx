@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Gift, Contribution } from '../types';
+import { formatContributionDate } from '../utils/date';
 import {
   EVENT_GIFT_ITEM,
   EVENT_GIFT_NAME,
@@ -87,7 +88,7 @@ export const GiftItem = ({ gift, onToggleStatus, onRemove, onContribute }: Props
                   <strong>Contributions:</strong>
                   {gift.contributions.map((c: Contribution) => (
                     <div key={c.id} className="gift-tooltip-entry">
-                      €{c.amount.toFixed(2)} — {new Date(c.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      €{c.amount.toFixed(2)} — {formatContributionDate(c.createdAt)}
                     </div>
                   ))}
                   <div className="gift-tooltip-total">

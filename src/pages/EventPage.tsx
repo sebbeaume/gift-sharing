@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import type { GiftEvent, Gift, Contribution } from '../types';
 import { getEvent, updateEvent } from '../utils/storage';
+import { formatEventDate } from '../utils/date';
 import { isAuthenticated } from '../utils/auth';
 import { GiftItem } from '../components/GiftItem';
 import { ContributionsSection } from '../components/ContributionsSection';
@@ -112,9 +113,7 @@ export const EventPage = () => {
     persist({ ...event, gifts });
   };
 
-  const formattedDate = new Date(event.date).toLocaleDateString('en-US', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-  });
+  const formattedDate = formatEventDate(event.date);
 
   return (
     <div className="event-page">
