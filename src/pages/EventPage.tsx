@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import type { GiftEvent, Gift } from '../types';
+import type { GiftEvent, Gift, Contribution } from '../types';
 import { getEvent, updateEvent } from '../utils/storage';
 import { isAuthenticated } from '../utils/auth';
 import { GiftItem } from '../components/GiftItem';
@@ -15,6 +15,12 @@ import {
   EVENT_GIFT_PRICE_INPUT,
   EVENT_GIFT_SUBMIT,
   EVENT_EMPTY_STATE,
+  EVENT_CONTRIBUTE_BTN,
+  EVENT_CONTRIBUTE_FORM,
+  EVENT_CONTRIBUTE_AMOUNT_INPUT,
+  EVENT_CONTRIBUTE_SUBMIT,
+  EVENT_CONTRIBUTIONS_TOTAL,
+  EVENT_CONTRIBUTION_ITEM,
 } from './EventPageTestIds';
 
 export const EventPage = () => {
@@ -27,6 +33,10 @@ export const EventPage = () => {
   const [giftLink, setGiftLink] = useState('');
   const [giftPrice, setGiftPrice] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
+
+  // Contribution form state
+  const [contributeAmount, setContributeAmount] = useState('');
+  const [showContributeForm, setShowContributeForm] = useState(false);
 
   useEffect(() => {
     if (!id || !isAuthenticated(id)) {
@@ -76,6 +86,20 @@ export const EventPage = () => {
   const removeGift = (giftId: string) => {
     persist({ ...event, gifts: event.gifts.filter(g => g.id !== giftId) });
   };
+
+  const handleContribute = (e: React.FormEvent) => {
+    e.preventDefault();
+    const contribution: Contribution = {
+      id: crypto.randomUUID(),
+      amount: parseFloat(contributeAmount),
+      createdAt: new Date().toISOString(),
+    };
+    persist({ ...event, contributions: [...event.contributions, contribution] });
+    setContributeAmount('');
+    setShowContributeForm(false);
+  };
+
+  const totalContributions = event.contributions.reduce((sum, c) => sum + c.amount, 0);
 
   const formattedDate = new Date(event.date).toLocaleDateString('en-US', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
@@ -161,6 +185,58 @@ export const EventPage = () => {
                 onToggleStatus={toggleStatus}
                 onRemove={removeGift}
               />
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section className="contributions-section">
+        <div className="contributions-header">
+          <div>
+            <h2>Contributions</h2>
+            <p className="contributions-total" data-testid={EVENT_CONTRIBUTIONS_TOTAL}>
+              Total: <strong>€{totalContributions.toFixed(2)}</strong>
+            </p>
+          </div>
+          <button
+            className="btn-primary"
+            data-testid={EVENT_CONTRIBUTE_BTN}
+            onClick={() => setShowContributeForm(v => !v)}
+          >
+            {showContributeForm ? 'Cancel' : '+ Contribute'}
+          </button>
+        </div>
+
+        {showContributeForm && (
+          <form className="contribute-form" data-testid={EVENT_CONTRIBUTE_FORM} onSubmit={handleContribute}>
+            <label>
+              Amount (€)
+              <input
+                type="number"
+                data-testid={EVENT_CONTRIBUTE_AMOUNT_INPUT}
+                min="0.01"
+                step="0.01"
+                value={contributeAmount}
+                onChange={e => setContributeAmount(e.target.value)}
+                placeholder="e.g. 20"
+                required
+              />
+            </label>
+            <button type="submit" className="btn-primary" data-testid={EVENT_CONTRIBUTE_SUBMIT}>
+              Confirm contribution
+            </button>
+          </form>
+        )}
+
+        {event.contributions.length > 0 && (
+          <ul className="contribution-list">
+            {event.contributions.map(c => (
+              <li key={c.id} className="contribution-item" data-testid={EVENT_CONTRIBUTION_ITEM}>
+                <span className="contribution-amount">€{c.amount.toFixed(2)}</span>
+                <span className="contribution-date">
+                  {new Date(c.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </span>
+              </li>
             ))}
           </ul>
         )}

@@ -16,3 +16,10 @@ export const EVENT_GIFT_LINK        = 'EventPage__giftLink';
 export const EVENT_GIFT_PRICE       = 'EventPage__giftPrice';
 export const EVENT_GIFT_STATUS_BTN  = 'EventPage__giftStatusBtn';
 export const EVENT_GIFT_REMOVE_BTN  = 'EventPage__giftRemoveBtn';
+
+export const EVENT_CONTRIBUTE_BTN           = 'EventPage__contributeBtn';
+export const EVENT_CONTRIBUTE_FORM          = 'EventPage__contributeForm';
+export const EVENT_CONTRIBUTE_AMOUNT_INPUT  = 'EventPage__contributeAmountInput';
+export const EVENT_CONTRIBUTE_SUBMIT        = 'EventPage__contributeSubmit';
+export const EVENT_CONTRIBUTIONS_TOTAL      = 'EventPage__contributionsTotal';
+export const EVENT_CONTRIBUTION_ITEM        = 'EventPage__contributionItem';
