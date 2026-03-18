@@ -12,6 +12,7 @@ import {
   EVENT_GIFT_CONTRIBUTE_FORM,
   EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT,
   EVENT_GIFT_CONTRIBUTE_SUBMIT,
+  EVENT_GIFT_PROGRESS_WRAPPER,
   EVENT_GIFT_PROGRESS_BAR,
   EVENT_GIFT_PROGRESS_TOOLTIP,
 } from '../pages/EventPageTestIds';
@@ -74,6 +75,7 @@ export const GiftItem = ({ gift, onToggleStatus, onRemove, onContribute }: Props
           {hasPartialContributions && (
             <div
               className="gift-progress-wrapper"
+              data-testid={EVENT_GIFT_PROGRESS_WRAPPER}
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
             >

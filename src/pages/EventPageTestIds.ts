@@ -28,5 +28,6 @@ export const EVENT_GIFT_CONTRIBUTE_BTN          = 'EventPage__giftContributeBtn'
 export const EVENT_GIFT_CONTRIBUTE_FORM         = 'EventPage__giftContributeForm';
 export const EVENT_GIFT_CONTRIBUTE_AMOUNT_INPUT = 'EventPage__giftContributeAmountInput';
 export const EVENT_GIFT_CONTRIBUTE_SUBMIT       = 'EventPage__giftContributeSubmit';
+export const EVENT_GIFT_PROGRESS_WRAPPER        = 'EventPage__giftProgressWrapper';
 export const EVENT_GIFT_PROGRESS_BAR            = 'EventPage__giftProgressBar';
 export const EVENT_GIFT_PROGRESS_TOOLTIP        = 'EventPage__giftProgressTooltip';
