@@ -42,7 +42,7 @@
 
   <!-- Contributions header -->
   <text x="32" y="358" font-size="17" fill="#1a1a2e" font-weight="600">Contributions</text>
-  <text x="32" y="377" font-size="13" fill="#555">Total: <tspan fill="#38a169" font-weight="700">€75.00</tspan></text>
+  <text x="32" y="377" font-size="13" fill="#555">Total: <tspan fill="#38a169" font-weight="700">€100.00</tspan></text>
   <rect x="598" y="338" width="130" height="32" rx="8" fill="#6c63ff"/>
   <text x="663" y="358" font-size="14" fill="white" text-anchor="middle" font-weight="600">+ Contribute</text>
 
