@@ -62,6 +62,23 @@ Launch config saved at `.claude/launch.json` (use `preview_start` with name `"gi
 Custom slash commands live in `.claude/commands/`:
 - `/doc-agent` — reviews the conversation and updates `CLAUDE.md` with new conventions or corrections
 
+## PR screenshots practice
+
+Every PR that changes visible UI **must include screenshots** in the PR description showing the affected states.
+
+### How to capture screenshots
+
+A dedicated Cypress spec lives at `cypress/e2e/screenshots.cy.ts`. Run it after starting the dev server:
+
+```bash
+npm run dev &           # start dev server
+npx cypress run --spec cypress/e2e/screenshots.cy.ts
+```
+
+Screenshots are written to `cypress/screenshots/UI Screenshots/`. Commit them to the branch, then embed in the PR description using relative paths or GitHub's drag-and-drop image upload.
+
+> **When implementing UI features:** after writing and committing the feature code, run the screenshot spec, commit the generated images, and add them to the PR description before pushing.
+
 ## What's been built
 - [x] HomePage with Create / Join forms and error handling
 - [x] EventPage with gift list (add, toggle purchased, remove)
